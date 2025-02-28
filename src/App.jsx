@@ -22,14 +22,16 @@ function App() {
         <section id="core-concepts">
           <h2>Core Concepts</h2>
           <ul>
-            <CoreConcept {...CORE_CONCEPTS[0]}></CoreConcept>
-            <CoreConcept {...CORE_CONCEPTS[1]}></CoreConcept>
-            <CoreConcept {...CORE_CONCEPTS[2]}></CoreConcept>
-            <CoreConcept
-              title={CORE_CONCEPTS[3].title}
-              description={CORE_CONCEPTS[3].description}
-              image={CORE_CONCEPTS[3].image}
-            ></CoreConcept>
+            {
+              // CORE_CONCEPTS.map(conceptItem => <CoreConcept { ...conceptItem } />)
+              CORE_CONCEPTS.map(conceptItem =>
+                <CoreConcept
+                  key={conceptItem.title}
+                  title={conceptItem.title}
+                  description={conceptItem.description}
+                  image={conceptItem.image}
+                />)
+            }
           </ul>
         </section>
 
@@ -38,7 +40,16 @@ function App() {
             Examples
           </h2>
           <menu>
-            <TabButton isSelected={selectedTopic === 'components'} onSelect={() => handleSelect('components')}>
+            { Object.values(EXAMPLES).map(exampleItem =>
+                <TabButton
+                  key={exampleItem.title}
+                  isSelected={selectedTopic === exampleItem.title.toLowerCase()}
+                  onSelect={() => handleSelect(exampleItem.title.toLowerCase())}
+                >
+                  { exampleItem.title }
+                </TabButton>
+            ) }
+            {/* <TabButton isSelected={selectedTopic === 'components'} onSelect={() => handleSelect('components')}>
               Components
             </TabButton>
             <TabButton isSelected={selectedTopic === 'jsx'} onSelect={() => handleSelect('jsx')}>
@@ -49,7 +60,7 @@ function App() {
             </TabButton>
             <TabButton isSelected={selectedTopic === 'state'} onSelect={() => handleSelect('state')}>
               State
-            </TabButton>
+            </TabButton> */}
           </menu>
           { selectedTopic ? (
             <div id="tab-content">
